@@ -10,14 +10,14 @@ def send_webhook(token):
         color=0x1E90FF
     )
     valid_website = '✅' if token['valid_website'] else '❌'
-    embed.set_thumbnail(url=token['image_uri'])
+    embed.set_image(url=token['image_uri'])
     embed.add_field(name="📝 Description", value=token['description'], inline=False)
     embed.add_field(name="Token Details", value='-----------------------------------------------------', inline=False)
     embed.add_field(name="💁 Creator", value=f"[Visit](https://pump.fun/profile/{token['creator']})", inline=True)
     embed.add_field(name="🐦 Twitter", value=f"[Vist]({token['twitter']})", inline=True)
     embed.add_field(name="☎️ Telegram", value=f"[Vist]({token['telegram']})", inline=True)
     embed.add_field(name="👨‍💻 Website First Check", value=f"{valid_website}{token['website']}", inline=False)
-    embed.add_field(name="Top 10 holders: ", value='', inline=False)
+    embed.add_field(name="🧑‍🤝‍🧑 Top 10 holders: ", value='', inline=False)
     holders = token['holders']
     for h in holders:
         address = h['owner'][:10] if h['owner'] else 'Unknown'
@@ -38,12 +38,13 @@ def send_webhook(token):
     if len(created_tokens) > 5:
         created_tokens = created_tokens[:5]
     for t in created_tokens:
-        market_cap_icon = '🔴' if t['usd_market_cap'] < 10000 else '🟡' if t['usd_market_cap'] < 50000 else '🟢'
-        embed.add_field(
-            value=f"[{market_cap_icon} {t['name']} ({t['symbol']}) Market Cap: ${format_number(t['usd_market_cap'])}](https://pump.fun/{t['mint']})",
-            name=f"",
-            inline=False
-        )
+        if t['mint'] != token['mint']:
+            market_cap_icon = '🔴' if t['usd_market_cap'] < 10000 else '🟡' if t['usd_market_cap'] < 50000 else '🟢'
+            embed.add_field(
+                value=f"[{market_cap_icon} {t['name']} ({t['symbol']}) Market Cap: ${format_number(t['usd_market_cap'])}](https://pump.fun/{t['mint']})",
+                name=f"",
+                inline=False
+            )
     if len(token['created_tokens']) > 5:
         embed.add_field(
             name=f"",

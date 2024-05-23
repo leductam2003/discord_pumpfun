@@ -110,7 +110,9 @@ class PUMPFUN:
     
     async def new_launch(self):
         data = await self.fetch_new_data()
-        new_tokens = [item for item in data if item['mint'] not in self.processed_mints and is_recent(item['created_timestamp'])]
+        if not data:
+            return
+        new_tokens = [item for item in data if item['mint'] not in self.processed_mints and is_recent(int(item['created_timestamp'] / 1000))]
         for token in new_tokens:
             self.processed_mints.add(token['mint'])
             created, holding = await asyncio.gather(self.fetch_dev_created(token['creator']), self.fetch_holder(token['mint']))
