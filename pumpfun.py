@@ -104,7 +104,7 @@ class PUMPFUN:
     
     async def new_launch(self):
         data = await self.fetch_new_token()
-        if not data:
+        if not data and data['mint'] in self.processed_mints:
             return
         self.processed_mints.add(data['mint'])
         created, holding = await asyncio.gather(self.fetch_dev_created(data['creator']), self.fetch_holder(data['mint']))

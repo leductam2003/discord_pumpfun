@@ -42,7 +42,6 @@ def send_webhook(token):
     if len(created_tokens) > 1:
         created_tokens = created_tokens[:5]
         embed.add_field(name="🚀 Creator Launched Tokens", value='', inline=False)
-    print(created_tokens)
     for t in created_tokens:
         if t['mint'] != token['mint']:
             market_cap_icon = '🔴' if t['usd_market_cap'] < 10000 else '🟡' if t['usd_market_cap'] < 50000 else '🟢'
