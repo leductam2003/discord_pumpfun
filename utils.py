@@ -7,7 +7,7 @@ def format_timestamp(timestamp):
     
 def is_recent(timestamp):
     current_time = datetime.now()
-    five_minutes_ago = current_time - timedelta(minutes=1)
+    five_minutes_ago = current_time - timedelta(minutes=3)
     return datetime.fromtimestamp(timestamp) > five_minutes_ago
 
 def is_in_blacklist(url):
